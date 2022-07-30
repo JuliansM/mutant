@@ -15,7 +15,8 @@ public class Dna {
 
     @Id
     @NotNull
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @SequenceGenerator(name="dna_seq", sequenceName = "dnas_id_seq", initialValue = 1, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "dna_seq")
     @Column(name = "id", nullable = false)
     private Integer id;
 

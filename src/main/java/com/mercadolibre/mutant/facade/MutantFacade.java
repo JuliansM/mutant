@@ -164,19 +164,23 @@ public class MutantFacade {
 
         List<Dna> dnas = mutantService.getDnas();
 
-        statDto.setCountHumanDna(dnas.size());
+        if (dnas.size() > 0) {
 
-        Integer countMutantDna = Math.toIntExact(dnas.stream()
-                .map(Dna::getIsMutant)
-                .filter(d -> d.equals(Boolean.TRUE))
-                .count());
+            statDto.setCountHumanDna(dnas.size());
 
-        statDto.setCountMutantDna(countMutantDna);
+            Integer countMutantDna = Math.toIntExact(dnas.stream()
+                    .map(Dna::getIsMutant)
+                    .filter(d -> d.equals(Boolean.TRUE))
+                    .count());
 
-        Double ratio = (double) statDto.getCountMutantDna() / (double) statDto.getCountHumanDna();
+            statDto.setCountMutantDna(countMutantDna);
 
-        decimalFormat.setRoundingMode(RoundingMode.UP);
-        statDto.setRatio(Double.valueOf(decimalFormat.format(ratio).replace(",", ".")));
+            Double ratio = (double) statDto.getCountMutantDna() / (double) statDto.getCountHumanDna();
+
+            decimalFormat.setRoundingMode(RoundingMode.UP);
+            statDto.setRatio(Double.valueOf(decimalFormat.format(ratio).replace(",", ".")));
+
+        }
 
         return statDto;
     }
